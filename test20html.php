@@ -184,88 +184,102 @@
   background-repeat: repeat-x;
 }
 
-      .form-row {
-        display: flex;
-        align-items: center;
-        margin-bottom: 15px;
-      }
-      
-      .form-row label {
-        width: 100px;
-        color: #666;
-        margin-right: 15px;
-        flex-shrink: 0;
-      }
-      
-      .form-control {
-        border: 1px solid #E0E0E0;
-        border-radius: 4px;
-        padding: 8px 12px;
-        flex-grow: 1;
-        transition: border-color 0.3s;
-      }
-      
-      .form-control:focus {
-        border-color: #4A90E2;
-        outline: none;
-      }
-      
-      .checkbox-container {
-        flex-grow: 1;
-      }
-      
-      .custom-checkbox {
-        position: relative;
-        cursor: pointer;
-        display: inline-block;
-        line-height: 20px;
-      }
-      
-      .custom-checkbox input {
-        position: absolute;
-        opacity: 0;
-        cursor: pointer;
-      }
-      
-      .checkmark {
-        position: absolute;
-        top: 0;
-        left: 0;
-        height: 20px;
-        width: 20px;
-        background-color: #fff;
-        border: 1px solid #E0E0E0;
-        border-radius: 4px;
-      }
-      
-      .custom-checkbox:hover input ~ .checkmark {
-        background-color: #f7f7f7;
-      }
-      
-      .custom-checkbox input:checked ~ .checkmark {
-        background-color: #4A90E2;
-        border-color: #4A90E2;
-      }
-      
-      .checkmark:after {
-        content: "";
-        position: absolute;
-        display: none;
-      }
-      
-      .custom-checkbox input:checked ~ .checkmark:after {
-        display: block;
-      }
-      
-      .custom-checkbox .checkmark:after {
-        left: 7px;
-        top: 3px;
-        width: 5px;
-        height: 10px;
-        border: solid white;
-        border-width: 0 2px 2px 0;
-        transform: rotate(45deg);
-      }
+.form-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+}
+
+.form-row label {
+  width: 100px;
+  color: #666;
+  flex-shrink: 0;
+  font-weight: 400;
+}
+
+.form-control {
+  border: 1px solid #E0E0E0;
+  border-radius: 8px;
+  padding: 8px 12px;
+  flex-grow: 1;
+  transition: border-color 0.3s;
+  font-weight: 600;
+}
+
+.form-control:focus {
+  border-color: #4A90E2;
+  outline: none;
+}
+
+.checkbox-container {
+  display: flex;
+  align-items: center;
+}
+
+/* контейнер чекбокса */
+.custom-checkbox {
+  position: relative;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  margin-top: -5px;
+}
+
+/* скрытый input */
+.custom-checkbox-input {
+  position: absolute;
+  opacity: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  cursor: pointer;
+  z-index: 2;
+}
+
+/* визуальный чекбокс */
+.checkmark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  background-color: #fff;
+  border: 1px solid #E0E0E0;
+  border-radius: 4px;
+  z-index: 1;
+  transition: background-color 0.2s, border-color 0.2s;
+}
+
+/* hover эффект */
+.custom-checkbox:hover .checkmark {
+  background-color: #f7f7f7;
+}
+
+/* стиль при checked */
+.custom-checkbox-input:checked ~ .checkmark {
+  background-color: #4A90E2;
+  border-color: #4A90E2;
+}
+
+/* галочка */
+.checkmark::after {
+  content: "";
+  position: absolute;
+  display: none;
+  left: 7px;
+  top: 3px;
+  width: 5px;
+  height: 10px;
+  border: solid white;
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg);
+}
+
+/* показываем галочку, если input чекнут */
+.custom-checkbox-input:checked ~ .checkmark::after {
+  display: block;
+}
+
 		</style>
 	</head>
 	<body>
@@ -304,29 +318,38 @@
 
 		    <div class="collapse navbar-collapse">
 		      <ul class="nav navbar-nav">
-		        <li class="cabinet-dropdown">
-              <a href="#">Кабінет</a>
-              <div class="login-form">
-                <div class="login-form-title"><span class="login-form-title-bold-dotted">First Name</span> Settings</div>
-                <div class="form-row">
-                  <label>Label</label>
-                  <input type="text" class="form-control" value="First Name">
-                </div>
-                <div class="form-row">
-                  <label>Placeholder</label>
-                  <input type="text" class="form-control">
-                </div>
-                <div class="form-row">
-                  <label>Required</label>
-                  <div class="checkbox-container">
-                    <label class="custom-checkbox">
-                      <input type="checkbox">
-                      <span class="checkmark"></span>
-                    </label>
-                  </div>
-                </div>
-              </div>
-            </li>
+          <li class="cabinet-dropdown">
+  <a href="#">Кабінет</a>
+  <div class="login-form">
+    <div class="login-form-title">
+      <span class="login-form-title-bold-dotted">First Name</span> Settings
+    </div>
+
+    <div class="form-row">
+      <label for="first-name-label">Label</label>
+      <input id="first-name-label" type="text" class="form-control" value="First Name">
+    </div>
+
+    <div class="form-row">
+      <label for="first-name-placeholder">Placeholder</label>
+      <input id="first-name-placeholder" type="text" class="form-control">
+    </div>
+
+    <div class="form-row">
+  <label for="first-name-required">Required</label>
+  <div class="checkbox-container">
+    <div class="custom-checkbox">
+      <input id="first-name-required" type="checkbox" class="custom-checkbox-input">
+      <span class="checkmark"></span>
+    </div>
+  </div>
+</div>
+
+
+  </div>
+</li>
+
+
 		        <li class="dropdown">
 		          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Категорії <span class="caret"></span></a>
 		          <ul class="dropdown-menu">
